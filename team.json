@@ -1,0 +1,27 @@
+{
+  "team_number": "T0023",
+  "group_lead": {
+    "name": "Sneha Agrawal",
+    "enrollment_no": "2501010674",
+    "github": "snehaag26"
+  },
+  "members": [
+    {
+      "name": "Akshit Baliyan",
+      "enrollment_no": "2501010048",
+      "github": "Akshit-ai837"
+    },
+    {
+      "name": "N Abhishek Kumar",
+      "enrollment_no": "2501010287",
+      "github": "abhishekkumar-tech"
+    },
+    {
+      "name": "Fenil sata",
+      "enrollment_no": "2501010162",
+      "github": "FSS3096"
+    }
+  ],
+  "postgres_version": "",
+  "laptop_used_for_benchmarks": "MacBook Pro M4"
+}

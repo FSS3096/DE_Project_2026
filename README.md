@@ -22,12 +22,12 @@
 
 | Role | Name | Enrollment No. | GitHub Username |
 |------|------|----------------|-----------------|
-| Group Lead | | | |
-| Member 2 | | | |
-| Member 3 | | | |
-| Member 4 | | | |
+| Group Lead | Sneha Agrawal | 2501010674 | snehaag26 |
+| Member 2 | Akshit Baliyan | 2501010048 | Akshit-ai837 |
+| Member 3 | N Abhishek Kumar | 2501010287 | abhishekkumar-tech |
+| Member 4 | Fenil sata | 2501010162 | FSS3096 |
 
-**Team No.:** ____ · **Section:** ____ · **Repository URL:** ____
+**Team No.:** T0023 · **Section:** B · **Repository URL:** https://github.com/edusatyaki/DBMS-Amazon-Online-Shopping.git
 
 ---
 
