@@ -8,16 +8,16 @@ erDiagram
 
     CATEGORIES {
         BIGINT category_id PK
-        BIGINT parent_category_id FK
         VARCHAR category_name
+        BIGINT parent_category_id FK
         BOOLEAN is_digital
     }
 
     SELLERS {
         BIGINT seller_id PK
-        BIGINT city_id FK
         VARCHAR business_name
         VARCHAR gstin UK
+        BIGINT city_id FK
         DATE joined_on
         NUMERIC seller_rating
         VARCHAR status
@@ -25,6 +25,7 @@ erDiagram
 
     PRODUCTS {
         BIGINT product_id PK
+        VARCHAR asin UK
         BIGINT seller_id FK
         BIGINT category_id FK
         VARCHAR title
@@ -32,13 +33,20 @@ erDiagram
         NUMERIC mrp
         NUMERIC price
         INTEGER stock_qty
+        BOOLEAN is_prime_eligible
+        NUMERIC avg_rating
+        INTEGER review_count
+        DATE listed_on
+        VARCHAR status
     }
 
     CUSTOMERS {
         BIGINT customer_id PK
-        VARCHAR name
+        VARCHAR full_name
         VARCHAR email UK
-        VARCHAR phone
+        VARCHAR phone UK
+        BIGINT city_id FK
+        DATE signup_date
         BOOLEAN is_prime
         DATE prime_since
     }
@@ -46,8 +54,9 @@ erDiagram
     ADDRESSES {
         BIGINT address_id PK
         BIGINT customer_id FK
+        VARCHAR label
+        VARCHAR line1
         BIGINT city_id FK
-        VARCHAR address_line
         VARCHAR pincode
         BOOLEAN is_default
     }
@@ -56,13 +65,17 @@ erDiagram
         BIGINT order_id PK
         BIGINT customer_id FK
         BIGINT address_id FK
-        DATE order_date
+        TIMESTAMPTZ ordered_at
+        VARCHAR payment_method
+        NUMERIC total_amount
         VARCHAR status
+        TIMESTAMPTZ shipped_at
+        TIMESTAMPTZ delivered_at
     }
 
     ORDER_ITEMS {
         BIGINT order_id PK, FK
-        INTEGER line_no PK
+        SMALLINT line_no PK
         BIGINT product_id FK
         BIGINT seller_id FK
         INTEGER quantity
@@ -72,8 +85,9 @@ erDiagram
     RETURNS {
         BIGINT return_id PK
         BIGINT order_id FK
-        INTEGER line_no FK
+        SMALLINT line_no FK
         VARCHAR reason
+        TIMESTAMPTZ requested_at
         VARCHAR status
         NUMERIC refund_amount
     }
@@ -82,19 +96,23 @@ erDiagram
         BIGINT review_id PK
         BIGINT product_id FK
         BIGINT customer_id FK
-        INTEGER rating
-        VARCHAR review_body
-        DATE review_date
+        SMALLINT rating
+        VARCHAR title
+        TEXT body
+        BOOLEAN verified_purchase
+        INTEGER helpful_votes
+        TIMESTAMPTZ created_at
     }
 
     CART_ITEMS {
         BIGINT customer_id PK, FK
         BIGINT product_id PK, FK
         INTEGER quantity
-        DATE added_at
+        TIMESTAMPTZ added_at
     }
 
     CITIES ||--o{ SELLERS : located_in
+    CITIES ||--o{ CUSTOMERS : lives_in
     CITIES ||--o{ ADDRESSES : has
 
     CATEGORIES o|--o{ CATEGORIES : parent_of
@@ -106,9 +124,9 @@ erDiagram
 
     ADDRESSES o|--o{ ORDERS : delivery_address
 
-    ORDERS ||--|{ ORDER_ITEMS : contains
+    ORDERS ||--o{ ORDER_ITEMS : contains
     PRODUCTS ||--o{ ORDER_ITEMS : included_in
-    SELLERS ||--o{ ORDER_ITEMS : fulfilled_by
+    SELLERS ||--o{ ORDER_ITEMS : supplied_by
 
     ORDER_ITEMS ||--o{ RETURNS : returned_through
 
@@ -117,4 +135,3 @@ erDiagram
 
     CUSTOMERS ||--o{ CART_ITEMS : owns
     PRODUCTS ||--o{ CART_ITEMS : added_to
-git add diagrams/er_diagram.png diagrams/er_diagram.mmd
