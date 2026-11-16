@@ -1,0 +1,39 @@
+=== R07 run 1 ===
+Sort  (cost=1077.02..1077.03 rows=3 width=45) (actual time=2.392..2.393 rows=3.00 loops=1)
+  Sort Key: stock_qty
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=555
+  ->  Seq Scan on products  (cost=0.00..1077.00 rows=3 width=45) (actual time=0.287..2.385 rows=3.00 loops=1)
+        Filter: ((stock_qty <= 20) AND ((status)::text = ANY ('{ACTIVE,OUT_OF_STOCK}'::text[])) AND (seller_id = 217))
+        Rows Removed by Filter: 29997
+        Buffers: shared hit=552
+Planning:
+  Buffers: shared hit=201
+Planning Time: 0.268 ms
+Execution Time: 2.401 ms
+=== R07 run 2 ===
+Sort  (cost=1077.02..1077.03 rows=3 width=45) (actual time=3.373..3.373 rows=3.00 loops=1)
+  Sort Key: stock_qty
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=555
+  ->  Seq Scan on products  (cost=0.00..1077.00 rows=3 width=45) (actual time=0.443..3.366 rows=3.00 loops=1)
+        Filter: ((stock_qty <= 20) AND ((status)::text = ANY ('{ACTIVE,OUT_OF_STOCK}'::text[])) AND (seller_id = 217))
+        Rows Removed by Filter: 29997
+        Buffers: shared hit=552
+Planning:
+  Buffers: shared hit=201
+Planning Time: 0.217 ms
+Execution Time: 3.381 ms
+=== R07 run 3 ===
+Sort  (cost=1077.02..1077.03 rows=3 width=45) (actual time=2.715..2.715 rows=3.00 loops=1)
+  Sort Key: stock_qty
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=555
+  ->  Seq Scan on products  (cost=0.00..1077.00 rows=3 width=45) (actual time=0.300..2.700 rows=3.00 loops=1)
+        Filter: ((stock_qty <= 20) AND ((status)::text = ANY ('{ACTIVE,OUT_OF_STOCK}'::text[])) AND (seller_id = 217))
+        Rows Removed by Filter: 29997
+        Buffers: shared hit=552
+Planning:
+  Buffers: shared hit=201
+Planning Time: 0.395 ms
+Execution Time: 2.729 ms

@@ -1,0 +1,33 @@
+=== W06 run 1 ===
+Delete on cart_items  (cost=0.00..1343.32 rows=0 width=0) (actual time=6.887..6.887 rows=0.00 loops=1)
+  Buffers: shared hit=12096 dirtied=330
+  ->  Seq Scan on cart_items  (cost=0.00..1343.32 rows=15079 width=6) (actual time=0.006..4.605 rows=11324.00 loops=1)
+        Filter: (added_at < ('2026-07-01 00:00:00+05:30'::timestamp with time zone - '90 days'::interval))
+        Rows Removed by Filter: 33674
+        Buffers: shared hit=442
+Planning:
+  Buffers: shared hit=57
+Planning Time: 0.156 ms
+Execution Time: 6.922 ms
+=== W06 run 2 ===
+Delete on cart_items  (cost=0.00..1343.32 rows=0 width=0) (actual time=6.941..6.941 rows=0.00 loops=1)
+  Buffers: shared hit=11766
+  ->  Seq Scan on cart_items  (cost=0.00..1343.32 rows=15079 width=6) (actual time=0.009..5.343 rows=11324.00 loops=1)
+        Filter: (added_at < ('2026-07-01 00:00:00+05:30'::timestamp with time zone - '90 days'::interval))
+        Rows Removed by Filter: 33674
+        Buffers: shared hit=442
+Planning:
+  Buffers: shared hit=57
+Planning Time: 0.135 ms
+Execution Time: 6.972 ms
+=== W06 run 3 ===
+Delete on cart_items  (cost=0.00..1343.32 rows=0 width=0) (actual time=7.051..7.051 rows=0.00 loops=1)
+  Buffers: shared hit=11766
+  ->  Seq Scan on cart_items  (cost=0.00..1343.32 rows=15079 width=6) (actual time=0.010..5.473 rows=11324.00 loops=1)
+        Filter: (added_at < ('2026-07-01 00:00:00+05:30'::timestamp with time zone - '90 days'::interval))
+        Rows Removed by Filter: 33674
+        Buffers: shared hit=442
+Planning:
+  Buffers: shared hit=57
+Planning Time: 0.158 ms
+Execution Time: 7.086 ms

@@ -1,0 +1,102 @@
+=== R11 run 1 ===
+Limit  (cost=5075.24..5075.26 rows=10 width=16) (actual time=4.349..4.997 rows=4.00 loops=1)
+  Buffers: shared hit=2300
+  ->  Sort  (cost=5075.24..5075.29 rows=21 width=16) (actual time=4.348..4.997 rows=4.00 loops=1)
+        Sort Key: (count(*)) DESC
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=2300
+        ->  GroupAggregate  (cost=5074.42..5074.78 rows=21 width=16) (actual time=4.339..4.988 rows=4.00 loops=1)
+              Group Key: b.product_id
+              Buffers: shared hit=2297
+              ->  Sort  (cost=5074.42..5074.47 rows=21 width=8) (actual time=4.333..4.982 rows=13.00 loops=1)
+                    Sort Key: b.product_id
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=2297
+                    ->  Gather  (cost=1000.42..5073.96 rows=21 width=8) (actual time=0.147..4.978 rows=13.00 loops=1)
+                          Workers Planned: 1
+                          Workers Launched: 1
+                          Buffers: shared hit=2297
+                          ->  Nested Loop  (cost=0.42..4071.86 rows=12 width=8) (actual time=0.055..3.459 rows=6.50 loops=2)
+                                Buffers: shared hit=2297
+                                ->  Parallel Seq Scan on order_items a  (cost=0.00..4020.71 rows=5 width=16) (actual time=0.026..3.434 rows=5.00 loops=2)
+                                      Filter: (product_id = 4321)
+                                      Rows Removed by Filter: 119995
+                                      Buffers: shared hit=2256
+                                ->  Index Scan using pk_order_items on order_items b  (cost=0.42..10.21 rows=2 width=16) (actual time=0.004..0.005 rows=1.30 loops=10)
+                                      Index Cond: (order_id = a.order_id)
+                                      Filter: (product_id <> a.product_id)
+                                      Rows Removed by Filter: 1
+                                      Index Searches: 10
+                                      Buffers: shared hit=41
+Planning:
+  Buffers: shared hit=131
+Planning Time: 0.263 ms
+Execution Time: 5.022 ms
+=== R11 run 2 ===
+Limit  (cost=5075.24..5075.26 rows=10 width=16) (actual time=4.290..4.946 rows=4.00 loops=1)
+  Buffers: shared hit=2300
+  ->  Sort  (cost=5075.24..5075.29 rows=21 width=16) (actual time=4.290..4.946 rows=4.00 loops=1)
+        Sort Key: (count(*)) DESC
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=2300
+        ->  GroupAggregate  (cost=5074.42..5074.78 rows=21 width=16) (actual time=4.281..4.937 rows=4.00 loops=1)
+              Group Key: b.product_id
+              Buffers: shared hit=2297
+              ->  Sort  (cost=5074.42..5074.47 rows=21 width=8) (actual time=4.276..4.932 rows=13.00 loops=1)
+                    Sort Key: b.product_id
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=2297
+                    ->  Gather  (cost=1000.42..5073.96 rows=21 width=8) (actual time=0.158..4.928 rows=13.00 loops=1)
+                          Workers Planned: 1
+                          Workers Launched: 1
+                          Buffers: shared hit=2297
+                          ->  Nested Loop  (cost=0.42..4071.86 rows=12 width=8) (actual time=0.464..3.428 rows=6.50 loops=2)
+                                Buffers: shared hit=2297
+                                ->  Parallel Seq Scan on order_items a  (cost=0.00..4020.71 rows=5 width=16) (actual time=0.435..3.410 rows=5.00 loops=2)
+                                      Filter: (product_id = 4321)
+                                      Rows Removed by Filter: 119995
+                                      Buffers: shared hit=2256
+                                ->  Index Scan using pk_order_items on order_items b  (cost=0.42..10.21 rows=2 width=16) (actual time=0.003..0.003 rows=1.30 loops=10)
+                                      Index Cond: (order_id = a.order_id)
+                                      Filter: (product_id <> a.product_id)
+                                      Rows Removed by Filter: 1
+                                      Index Searches: 10
+                                      Buffers: shared hit=41
+Planning:
+  Buffers: shared hit=131
+Planning Time: 0.248 ms
+Execution Time: 4.972 ms
+=== R11 run 3 ===
+Limit  (cost=5075.24..5075.26 rows=10 width=16) (actual time=4.402..5.077 rows=4.00 loops=1)
+  Buffers: shared hit=2300
+  ->  Sort  (cost=5075.24..5075.29 rows=21 width=16) (actual time=4.401..5.076 rows=4.00 loops=1)
+        Sort Key: (count(*)) DESC
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=2300
+        ->  GroupAggregate  (cost=5074.42..5074.78 rows=21 width=16) (actual time=4.393..5.069 rows=4.00 loops=1)
+              Group Key: b.product_id
+              Buffers: shared hit=2297
+              ->  Sort  (cost=5074.42..5074.47 rows=21 width=8) (actual time=4.387..5.063 rows=13.00 loops=1)
+                    Sort Key: b.product_id
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=2297
+                    ->  Gather  (cost=1000.42..5073.96 rows=21 width=8) (actual time=0.150..5.059 rows=13.00 loops=1)
+                          Workers Planned: 1
+                          Workers Launched: 1
+                          Buffers: shared hit=2297
+                          ->  Nested Loop  (cost=0.42..4071.86 rows=12 width=8) (actual time=0.424..3.470 rows=6.50 loops=2)
+                                Buffers: shared hit=2297
+                                ->  Parallel Seq Scan on order_items a  (cost=0.00..4020.71 rows=5 width=16) (actual time=0.395..3.452 rows=5.00 loops=2)
+                                      Filter: (product_id = 4321)
+                                      Rows Removed by Filter: 119995
+                                      Buffers: shared hit=2256
+                                ->  Index Scan using pk_order_items on order_items b  (cost=0.42..10.21 rows=2 width=16) (actual time=0.003..0.003 rows=1.30 loops=10)
+                                      Index Cond: (order_id = a.order_id)
+                                      Filter: (product_id <> a.product_id)
+                                      Rows Removed by Filter: 1
+                                      Index Searches: 10
+                                      Buffers: shared hit=41
+Planning:
+  Buffers: shared hit=131
+Planning Time: 0.234 ms
+Execution Time: 5.100 ms

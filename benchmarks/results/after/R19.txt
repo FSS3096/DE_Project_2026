@@ -1,0 +1,120 @@
+=== R19 run 1 ===
+Sort  (cost=87280.31..87282.66 rows=938 width=50) (actual time=13.305..13.323 rows=937.00 loops=1)
+  Sort Key: ((SubPlan 2)) DESC, p.product_id
+  Sort Method: quicksort  Memory: 89kB
+  Buffers: shared hit=29258
+  InitPlan 3
+    ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=8) (actual time=0.003..0.004 rows=1.00 loops=1)
+          Filter: ((category_name)::text = 'Mobiles'::text)
+          Rows Removed by Filter: 39
+          Buffers: shared hit=1
+  ->  Seq Scan on products p  (cost=0.00..87232.51 rows=938 width=50) (actual time=0.054..13.149 rows=937.00 loops=1)
+        Filter: (category_id = (InitPlan 3).col1)
+        Rows Removed by Filter: 29063
+        Buffers: shared hit=29255
+        SubPlan 1
+          ->  Aggregate  (cost=83.39..83.40 rows=1 width=8) (actual time=0.011..0.011 rows=1.00 loops=937)
+                Buffers: shared hit=25856
+                ->  Nested Loop  (cost=0.71..83.37 rows=9 width=8) (actual time=0.003..0.011 rows=8.19 loops=937)
+                      Buffers: shared hit=25856
+                      ->  Index Only Scan using idx_order_items_product_id_cover on order_items oi  (cost=0.42..8.58 rows=9 width=8) (actual time=0.002..0.002 rows=8.19 loops=937)
+                            Index Cond: (product_id = p.product_id)
+                            Heap Fetches: 0
+                            Index Searches: 937
+                            Buffers: shared hit=2846
+                      ->  Index Scan using orders_pkey on orders o  (cost=0.29..8.31 rows=1 width=16) (actual time=0.001..0.001 rows=1.00 loops=7670)
+                            Index Cond: (order_id = oi.order_id)
+                            Index Searches: 7670
+                            Buffers: shared hit=23010
+        SubPlan 2
+          ->  Aggregate  (cost=8.60..8.61 rows=1 width=8) (actual time=0.001..0.001 rows=1.00 loops=937)
+                Buffers: shared hit=2846
+                ->  Index Only Scan using idx_order_items_product_id_cover on order_items oi_1  (cost=0.42..8.58 rows=9 width=4) (actual time=0.001..0.001 rows=8.19 loops=937)
+                      Index Cond: (product_id = p.product_id)
+                      Heap Fetches: 0
+                      Index Searches: 937
+                      Buffers: shared hit=2846
+Planning:
+  Buffers: shared hit=278
+Planning Time: 0.552 ms
+Execution Time: 13.368 ms
+=== R19 run 2 ===
+Sort  (cost=87280.31..87282.66 rows=938 width=50) (actual time=11.297..11.313 rows=937.00 loops=1)
+  Sort Key: ((SubPlan 2)) DESC, p.product_id
+  Sort Method: quicksort  Memory: 89kB
+  Buffers: shared hit=29258
+  InitPlan 3
+    ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=8) (actual time=0.003..0.004 rows=1.00 loops=1)
+          Filter: ((category_name)::text = 'Mobiles'::text)
+          Rows Removed by Filter: 39
+          Buffers: shared hit=1
+  ->  Seq Scan on products p  (cost=0.00..87232.51 rows=938 width=50) (actual time=0.047..11.157 rows=937.00 loops=1)
+        Filter: (category_id = (InitPlan 3).col1)
+        Rows Removed by Filter: 29063
+        Buffers: shared hit=29255
+        SubPlan 1
+          ->  Aggregate  (cost=83.39..83.40 rows=1 width=8) (actual time=0.009..0.009 rows=1.00 loops=937)
+                Buffers: shared hit=25856
+                ->  Nested Loop  (cost=0.71..83.37 rows=9 width=8) (actual time=0.002..0.009 rows=8.19 loops=937)
+                      Buffers: shared hit=25856
+                      ->  Index Only Scan using idx_order_items_product_id_cover on order_items oi  (cost=0.42..8.58 rows=9 width=8) (actual time=0.001..0.002 rows=8.19 loops=937)
+                            Index Cond: (product_id = p.product_id)
+                            Heap Fetches: 0
+                            Index Searches: 937
+                            Buffers: shared hit=2846
+                      ->  Index Scan using orders_pkey on orders o  (cost=0.29..8.31 rows=1 width=16) (actual time=0.001..0.001 rows=1.00 loops=7670)
+                            Index Cond: (order_id = oi.order_id)
+                            Index Searches: 7670
+                            Buffers: shared hit=23010
+        SubPlan 2
+          ->  Aggregate  (cost=8.60..8.61 rows=1 width=8) (actual time=0.001..0.001 rows=1.00 loops=937)
+                Buffers: shared hit=2846
+                ->  Index Only Scan using idx_order_items_product_id_cover on order_items oi_1  (cost=0.42..8.58 rows=9 width=4) (actual time=0.000..0.001 rows=8.19 loops=937)
+                      Index Cond: (product_id = p.product_id)
+                      Heap Fetches: 0
+                      Index Searches: 937
+                      Buffers: shared hit=2846
+Planning:
+  Buffers: shared hit=278
+Planning Time: 0.497 ms
+Execution Time: 11.362 ms
+=== R19 run 3 ===
+Sort  (cost=87280.31..87282.66 rows=938 width=50) (actual time=10.722..10.738 rows=937.00 loops=1)
+  Sort Key: ((SubPlan 2)) DESC, p.product_id
+  Sort Method: quicksort  Memory: 89kB
+  Buffers: shared hit=29258
+  InitPlan 3
+    ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=8) (actual time=0.003..0.004 rows=1.00 loops=1)
+          Filter: ((category_name)::text = 'Mobiles'::text)
+          Rows Removed by Filter: 39
+          Buffers: shared hit=1
+  ->  Seq Scan on products p  (cost=0.00..87232.51 rows=938 width=50) (actual time=0.049..10.585 rows=937.00 loops=1)
+        Filter: (category_id = (InitPlan 3).col1)
+        Rows Removed by Filter: 29063
+        Buffers: shared hit=29255
+        SubPlan 1
+          ->  Aggregate  (cost=83.39..83.40 rows=1 width=8) (actual time=0.009..0.009 rows=1.00 loops=937)
+                Buffers: shared hit=25856
+                ->  Nested Loop  (cost=0.71..83.37 rows=9 width=8) (actual time=0.002..0.008 rows=8.19 loops=937)
+                      Buffers: shared hit=25856
+                      ->  Index Only Scan using idx_order_items_product_id_cover on order_items oi  (cost=0.42..8.58 rows=9 width=8) (actual time=0.001..0.002 rows=8.19 loops=937)
+                            Index Cond: (product_id = p.product_id)
+                            Heap Fetches: 0
+                            Index Searches: 937
+                            Buffers: shared hit=2846
+                      ->  Index Scan using orders_pkey on orders o  (cost=0.29..8.31 rows=1 width=16) (actual time=0.001..0.001 rows=1.00 loops=7670)
+                            Index Cond: (order_id = oi.order_id)
+                            Index Searches: 7670
+                            Buffers: shared hit=23010
+        SubPlan 2
+          ->  Aggregate  (cost=8.60..8.61 rows=1 width=8) (actual time=0.001..0.001 rows=1.00 loops=937)
+                Buffers: shared hit=2846
+                ->  Index Only Scan using idx_order_items_product_id_cover on order_items oi_1  (cost=0.42..8.58 rows=9 width=4) (actual time=0.000..0.001 rows=8.19 loops=937)
+                      Index Cond: (product_id = p.product_id)
+                      Heap Fetches: 0
+                      Index Searches: 937
+                      Buffers: shared hit=2846
+Planning:
+  Buffers: shared hit=278
+Planning Time: 0.455 ms
+Execution Time: 10.779 ms

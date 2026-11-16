@@ -1,0 +1,39 @@
+=== R05 run 1 ===
+Sort  (cost=3373.97..3375.94 rows=789 width=24) (actual time=11.422..11.437 rows=356.00 loops=1)
+  Sort Key: shipped_at
+  Sort Method: quicksort  Memory: 38kB
+  Buffers: shared hit=1539
+  ->  Seq Scan on orders  (cost=0.00..3336.00 rows=789 width=24) (actual time=0.090..11.341 rows=356.00 loops=1)
+        Filter: ((shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'SHIPPED'::text))
+        Rows Removed by Filter: 119644
+        Buffers: shared hit=1536
+Planning:
+  Buffers: shared hit=94
+Planning Time: 0.626 ms
+Execution Time: 11.485 ms
+=== R05 run 2 ===
+Sort  (cost=3373.97..3375.94 rows=789 width=24) (actual time=9.532..9.546 rows=356.00 loops=1)
+  Sort Key: shipped_at
+  Sort Method: quicksort  Memory: 38kB
+  Buffers: shared hit=1539
+  ->  Seq Scan on orders  (cost=0.00..3336.00 rows=789 width=24) (actual time=0.051..9.469 rows=356.00 loops=1)
+        Filter: ((shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'SHIPPED'::text))
+        Rows Removed by Filter: 119644
+        Buffers: shared hit=1536
+Planning:
+  Buffers: shared hit=94
+Planning Time: 0.468 ms
+Execution Time: 9.596 ms
+=== R05 run 3 ===
+Sort  (cost=3373.97..3375.94 rows=789 width=24) (actual time=9.286..9.293 rows=356.00 loops=1)
+  Sort Key: shipped_at
+  Sort Method: quicksort  Memory: 38kB
+  Buffers: shared hit=1539
+  ->  Seq Scan on orders  (cost=0.00..3336.00 rows=789 width=24) (actual time=0.021..9.242 rows=356.00 loops=1)
+        Filter: ((shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'SHIPPED'::text))
+        Rows Removed by Filter: 119644
+        Buffers: shared hit=1536
+Planning:
+  Buffers: shared hit=94
+Planning Time: 0.153 ms
+Execution Time: 9.317 ms

@@ -1,0 +1,99 @@
+=== R16 run 1 ===
+Limit  (cost=2031.14..2031.27 rows=50 width=59) (actual time=8.673..8.676 rows=50.00 loops=1)
+  Buffers: shared hit=1092
+  ->  Sort  (cost=2031.14..2032.19 rows=418 width=59) (actual time=8.673..8.674 rows=50.00 loops=1)
+        Sort Key: r.created_at DESC
+        Sort Method: top-N heapsort  Memory: 38kB
+        Buffers: shared hit=1092
+        ->  Hash Join  (cost=978.14..2017.26 rows=418 width=59) (actual time=2.285..8.613 rows=584.00 loops=1)
+              Hash Cond: (r.product_id = p.product_id)
+              Buffers: shared hit=1089
+              ->  Seq Scan on product_reviews r  (cost=0.00..1019.28 rows=4175 width=59) (actual time=0.006..6.081 rows=4203.00 loops=1)
+                    Filter: (body ~~* '%battery%'::text)
+                    Rows Removed by Filter: 34459
+                    Buffers: shared hit=536
+              ->  Hash  (cost=940.64..940.64 rows=3000 width=8) (actual time=2.265..2.266 rows=3750.00 loops=1)
+                    Buckets: 4096  Batches: 1  Memory Usage: 179kB
+                    Buffers: shared hit=553
+                    ->  Hash Join  (cost=1.55..940.64 rows=3000 width=8) (actual time=0.013..2.128 rows=3750.00 loops=1)
+                          Hash Cond: (p.category_id = c.category_id)
+                          Buffers: shared hit=553
+                          ->  Seq Scan on products p  (cost=0.00..852.00 rows=30000 width=16) (actual time=0.002..0.842 rows=30000.00 loops=1)
+                                Buffers: shared hit=552
+                          ->  Hash  (cost=1.50..1.50 rows=4 width=8) (actual time=0.006..0.006 rows=4.00 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                Buffers: shared hit=1
+                                ->  Seq Scan on categories c  (cost=0.00..1.50 rows=4 width=8) (actual time=0.002..0.003 rows=4.00 loops=1)
+                                      Filter: (parent_category_id = 1)
+                                      Rows Removed by Filter: 36
+                                      Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=279
+Planning Time: 0.394 ms
+Execution Time: 8.703 ms
+=== R16 run 2 ===
+Limit  (cost=2031.14..2031.27 rows=50 width=59) (actual time=8.388..8.391 rows=50.00 loops=1)
+  Buffers: shared hit=1092
+  ->  Sort  (cost=2031.14..2032.19 rows=418 width=59) (actual time=8.388..8.389 rows=50.00 loops=1)
+        Sort Key: r.created_at DESC
+        Sort Method: top-N heapsort  Memory: 38kB
+        Buffers: shared hit=1092
+        ->  Hash Join  (cost=978.14..2017.26 rows=418 width=59) (actual time=2.180..8.330 rows=584.00 loops=1)
+              Hash Cond: (r.product_id = p.product_id)
+              Buffers: shared hit=1089
+              ->  Seq Scan on product_reviews r  (cost=0.00..1019.28 rows=4175 width=59) (actual time=0.005..5.905 rows=4203.00 loops=1)
+                    Filter: (body ~~* '%battery%'::text)
+                    Rows Removed by Filter: 34459
+                    Buffers: shared hit=536
+              ->  Hash  (cost=940.64..940.64 rows=3000 width=8) (actual time=2.161..2.162 rows=3750.00 loops=1)
+                    Buckets: 4096  Batches: 1  Memory Usage: 179kB
+                    Buffers: shared hit=553
+                    ->  Hash Join  (cost=1.55..940.64 rows=3000 width=8) (actual time=0.013..2.020 rows=3750.00 loops=1)
+                          Hash Cond: (p.category_id = c.category_id)
+                          Buffers: shared hit=553
+                          ->  Seq Scan on products p  (cost=0.00..852.00 rows=30000 width=16) (actual time=0.002..0.827 rows=30000.00 loops=1)
+                                Buffers: shared hit=552
+                          ->  Hash  (cost=1.50..1.50 rows=4 width=8) (actual time=0.006..0.006 rows=4.00 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                Buffers: shared hit=1
+                                ->  Seq Scan on categories c  (cost=0.00..1.50 rows=4 width=8) (actual time=0.002..0.003 rows=4.00 loops=1)
+                                      Filter: (parent_category_id = 1)
+                                      Rows Removed by Filter: 36
+                                      Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=279
+Planning Time: 0.375 ms
+Execution Time: 8.416 ms
+=== R16 run 3 ===
+Limit  (cost=2031.14..2031.27 rows=50 width=59) (actual time=8.245..8.248 rows=50.00 loops=1)
+  Buffers: shared hit=1092
+  ->  Sort  (cost=2031.14..2032.19 rows=418 width=59) (actual time=8.244..8.246 rows=50.00 loops=1)
+        Sort Key: r.created_at DESC
+        Sort Method: top-N heapsort  Memory: 38kB
+        Buffers: shared hit=1092
+        ->  Hash Join  (cost=978.14..2017.26 rows=418 width=59) (actual time=2.186..8.189 rows=584.00 loops=1)
+              Hash Cond: (r.product_id = p.product_id)
+              Buffers: shared hit=1089
+              ->  Seq Scan on product_reviews r  (cost=0.00..1019.28 rows=4175 width=59) (actual time=0.005..5.750 rows=4203.00 loops=1)
+                    Filter: (body ~~* '%battery%'::text)
+                    Rows Removed by Filter: 34459
+                    Buffers: shared hit=536
+              ->  Hash  (cost=940.64..940.64 rows=3000 width=8) (actual time=2.167..2.168 rows=3750.00 loops=1)
+                    Buckets: 4096  Batches: 1  Memory Usage: 179kB
+                    Buffers: shared hit=553
+                    ->  Hash Join  (cost=1.55..940.64 rows=3000 width=8) (actual time=0.012..2.034 rows=3750.00 loops=1)
+                          Hash Cond: (p.category_id = c.category_id)
+                          Buffers: shared hit=553
+                          ->  Seq Scan on products p  (cost=0.00..852.00 rows=30000 width=16) (actual time=0.002..0.812 rows=30000.00 loops=1)
+                                Buffers: shared hit=552
+                          ->  Hash  (cost=1.50..1.50 rows=4 width=8) (actual time=0.006..0.006 rows=4.00 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                Buffers: shared hit=1
+                                ->  Seq Scan on categories c  (cost=0.00..1.50 rows=4 width=8) (actual time=0.002..0.003 rows=4.00 loops=1)
+                                      Filter: (parent_category_id = 1)
+                                      Rows Removed by Filter: 36
+                                      Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=279
+Planning Time: 0.377 ms
+Execution Time: 8.272 ms
