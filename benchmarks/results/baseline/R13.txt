@@ -1,0 +1,36 @@
+=== R13 run 1 ===
+Seq Scan on addresses a  (cost=3036.00..4142.50 rows=22500 width=21) (actual time=27.327..27.328 rows=0.00 loops=1)
+  Filter: (NOT (ANY (address_id = (hashed SubPlan 1).col1)))
+  Rows Removed by Filter: 45000
+  Buffers: shared hit=2080
+  SubPlan 1
+    ->  Seq Scan on orders o  (cost=0.00..2736.00 rows=120000 width=8) (actual time=0.003..4.910 rows=120000.00 loops=1)
+          Buffers: shared hit=1536
+Planning:
+  Buffers: shared hit=76 dirtied=1
+Planning Time: 0.196 ms
+Execution Time: 27.368 ms
+=== R13 run 2 ===
+Seq Scan on addresses a  (cost=3036.00..4142.50 rows=22500 width=21) (actual time=14.892..14.892 rows=0.00 loops=1)
+  Filter: (NOT (ANY (address_id = (hashed SubPlan 1).col1)))
+  Rows Removed by Filter: 45000
+  Buffers: shared hit=2080
+  SubPlan 1
+    ->  Seq Scan on orders o  (cost=0.00..2736.00 rows=120000 width=8) (actual time=0.004..3.889 rows=120000.00 loops=1)
+          Buffers: shared hit=1536
+Planning:
+  Buffers: shared hit=76
+Planning Time: 0.161 ms
+Execution Time: 14.927 ms
+=== R13 run 3 ===
+Seq Scan on addresses a  (cost=3036.00..4142.50 rows=22500 width=21) (actual time=13.490..13.490 rows=0.00 loops=1)
+  Filter: (NOT (ANY (address_id = (hashed SubPlan 1).col1)))
+  Rows Removed by Filter: 45000
+  Buffers: shared hit=2080
+  SubPlan 1
+    ->  Seq Scan on orders o  (cost=0.00..2736.00 rows=120000 width=8) (actual time=0.003..3.838 rows=120000.00 loops=1)
+          Buffers: shared hit=1536
+Planning:
+  Buffers: shared hit=76
+Planning Time: 0.164 ms
+Execution Time: 13.524 ms

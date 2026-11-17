@@ -1,0 +1,111 @@
+=== R10 run 1 ===
+Limit  (cost=6493.03..6493.28 rows=100 width=48) (actual time=15.865..15.871 rows=100.00 loops=1)
+  Buffers: shared hit=2422
+  ->  Sort  (cost=6493.03..6520.21 rows=10869 width=48) (actual time=15.864..15.867 rows=100.00 loops=1)
+        Sort Key: (sum(((ci.quantity)::numeric * p.price))) DESC
+        Sort Method: top-N heapsort  Memory: 36kB
+        Buffers: shared hit=2422
+        ->  HashAggregate  (cost=5941.77..6077.63 rows=10869 width=48) (actual time=14.321..15.270 rows=9961.00 loops=1)
+              Group Key: ci.customer_id
+              Batches: 1  Memory Usage: 4113kB
+              Buffers: shared hit=2419
+              ->  Hash Join  (cost=2396.70..5805.90 rows=10869 width=17) (actual time=10.124..12.253 rows=14185.00 loops=1)
+                    Hash Cond: (ci.product_id = p.product_id)
+                    Buffers: shared hit=2419
+                    ->  Hash Right Anti Join  (cost=1169.70..4550.37 rows=10869 width=20) (actual time=7.102..7.706 rows=14185.00 loops=1)
+                          Hash Cond: (o.customer_id = ci.customer_id)
+                          Buffers: shared hit=1867
+                          ->  Seq Scan on orders o  (cost=0.00..3036.00 rows=13279 width=8) (actual time=2.948..3.490 rows=13406.00 loops=1)
+                                Filter: (ordered_at >= '2026-05-01 00:00:00+05:30'::timestamp with time zone)
+                                Rows Removed by Filter: 106594
+                                Buffers: shared hit=1536
+                          ->  Hash  (cost=893.48..893.48 rows=22098 width=20) (actual time=2.773..2.773 rows=22194.00 loops=1)
+                                Buckets: 32768  Batches: 1  Memory Usage: 1470kB
+                                Buffers: shared hit=331
+                                ->  Seq Scan on cart_items ci  (cost=0.00..893.48 rows=22098 width=20) (actual time=0.004..1.831 rows=22194.00 loops=1)
+                                      Filter: (added_at < '2026-05-01 00:00:00+05:30'::timestamp with time zone)
+                                      Rows Removed by Filter: 22804
+                                      Buffers: shared hit=331
+                    ->  Hash  (cost=852.00..852.00 rows=30000 width=13) (actual time=3.002..3.002 rows=30000.00 loops=1)
+                          Buckets: 32768  Batches: 1  Memory Usage: 1663kB
+                          Buffers: shared hit=552
+                          ->  Seq Scan on products p  (cost=0.00..852.00 rows=30000 width=13) (actual time=0.004..1.697 rows=30000.00 loops=1)
+                                Buffers: shared hit=552
+Planning:
+  Buffers: shared hit=227 dirtied=1
+Planning Time: 0.467 ms
+Execution Time: 15.926 ms
+=== R10 run 2 ===
+Limit  (cost=6493.03..6493.28 rows=100 width=48) (actual time=14.937..14.943 rows=100.00 loops=1)
+  Buffers: shared hit=2422
+  ->  Sort  (cost=6493.03..6520.21 rows=10869 width=48) (actual time=14.937..14.940 rows=100.00 loops=1)
+        Sort Key: (sum(((ci.quantity)::numeric * p.price))) DESC
+        Sort Method: top-N heapsort  Memory: 36kB
+        Buffers: shared hit=2422
+        ->  HashAggregate  (cost=5941.77..6077.63 rows=10869 width=48) (actual time=13.432..14.351 rows=9961.00 loops=1)
+              Group Key: ci.customer_id
+              Batches: 1  Memory Usage: 4113kB
+              Buffers: shared hit=2419
+              ->  Hash Join  (cost=2396.70..5805.90 rows=10869 width=17) (actual time=9.209..11.397 rows=14185.00 loops=1)
+                    Hash Cond: (ci.product_id = p.product_id)
+                    Buffers: shared hit=2419
+                    ->  Hash Right Anti Join  (cost=1169.70..4550.37 rows=10869 width=20) (actual time=6.455..7.068 rows=14185.00 loops=1)
+                          Hash Cond: (o.customer_id = ci.customer_id)
+                          Buffers: shared hit=1867
+                          ->  Seq Scan on orders o  (cost=0.00..3036.00 rows=13279 width=8) (actual time=2.735..3.247 rows=13406.00 loops=1)
+                                Filter: (ordered_at >= '2026-05-01 00:00:00+05:30'::timestamp with time zone)
+                                Rows Removed by Filter: 106594
+                                Buffers: shared hit=1536
+                          ->  Hash  (cost=893.48..893.48 rows=22098 width=20) (actual time=2.368..2.368 rows=22194.00 loops=1)
+                                Buckets: 32768  Batches: 1  Memory Usage: 1470kB
+                                Buffers: shared hit=331
+                                ->  Seq Scan on cart_items ci  (cost=0.00..893.48 rows=22098 width=20) (actual time=0.003..1.504 rows=22194.00 loops=1)
+                                      Filter: (added_at < '2026-05-01 00:00:00+05:30'::timestamp with time zone)
+                                      Rows Removed by Filter: 22804
+                                      Buffers: shared hit=331
+                    ->  Hash  (cost=852.00..852.00 rows=30000 width=13) (actual time=2.739..2.739 rows=30000.00 loops=1)
+                          Buckets: 32768  Batches: 1  Memory Usage: 1663kB
+                          Buffers: shared hit=552
+                          ->  Seq Scan on products p  (cost=0.00..852.00 rows=30000 width=13) (actual time=0.003..1.611 rows=30000.00 loops=1)
+                                Buffers: shared hit=552
+Planning:
+  Buffers: shared hit=225
+Planning Time: 0.410 ms
+Execution Time: 15.001 ms
+=== R10 run 3 ===
+Limit  (cost=6493.03..6493.28 rows=100 width=48) (actual time=14.784..14.789 rows=100.00 loops=1)
+  Buffers: shared hit=2422
+  ->  Sort  (cost=6493.03..6520.21 rows=10869 width=48) (actual time=14.783..14.785 rows=100.00 loops=1)
+        Sort Key: (sum(((ci.quantity)::numeric * p.price))) DESC
+        Sort Method: top-N heapsort  Memory: 36kB
+        Buffers: shared hit=2422
+        ->  HashAggregate  (cost=5941.77..6077.63 rows=10869 width=48) (actual time=13.249..14.184 rows=9961.00 loops=1)
+              Group Key: ci.customer_id
+              Batches: 1  Memory Usage: 4113kB
+              Buffers: shared hit=2419
+              ->  Hash Join  (cost=2396.70..5805.90 rows=10869 width=17) (actual time=9.154..11.175 rows=14185.00 loops=1)
+                    Hash Cond: (ci.product_id = p.product_id)
+                    Buffers: shared hit=2419
+                    ->  Hash Right Anti Join  (cost=1169.70..4550.37 rows=10869 width=20) (actual time=6.356..6.913 rows=14185.00 loops=1)
+                          Hash Cond: (o.customer_id = ci.customer_id)
+                          Buffers: shared hit=1867
+                          ->  Seq Scan on orders o  (cost=0.00..3036.00 rows=13279 width=8) (actual time=2.736..3.243 rows=13406.00 loops=1)
+                                Filter: (ordered_at >= '2026-05-01 00:00:00+05:30'::timestamp with time zone)
+                                Rows Removed by Filter: 106594
+                                Buffers: shared hit=1536
+                          ->  Hash  (cost=893.48..893.48 rows=22098 width=20) (actual time=2.337..2.337 rows=22194.00 loops=1)
+                                Buckets: 32768  Batches: 1  Memory Usage: 1470kB
+                                Buffers: shared hit=331
+                                ->  Seq Scan on cart_items ci  (cost=0.00..893.48 rows=22098 width=20) (actual time=0.003..1.496 rows=22194.00 loops=1)
+                                      Filter: (added_at < '2026-05-01 00:00:00+05:30'::timestamp with time zone)
+                                      Rows Removed by Filter: 22804
+                                      Buffers: shared hit=331
+                    ->  Hash  (cost=852.00..852.00 rows=30000 width=13) (actual time=2.782..2.782 rows=30000.00 loops=1)
+                          Buckets: 32768  Batches: 1  Memory Usage: 1663kB
+                          Buffers: shared hit=552
+                          ->  Seq Scan on products p  (cost=0.00..852.00 rows=30000 width=13) (actual time=0.004..1.604 rows=30000.00 loops=1)
+                                Buffers: shared hit=552
+Planning:
+  Buffers: shared hit=225
+Planning Time: 0.391 ms
+Execution Time: 14.843 ms
