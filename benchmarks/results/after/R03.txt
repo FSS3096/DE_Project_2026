@@ -1,48 +1,39 @@
 === R03 run 1 ===
-GroupAggregate  (cost=1019.29..1019.32 rows=2 width=10) (actual time=3.684..3.685 rows=1.00 loops=1)
+GroupAggregate  (cost=0.29..8.36 rows=2 width=10) (actual time=0.321..0.322 rows=1.00 loops=1)
   Group Key: rating
-  Buffers: shared hit=539
-  ->  Sort  (cost=1019.29..1019.29 rows=2 width=2) (actual time=3.672..3.673 rows=1.00 loops=1)
-        Sort Key: rating DESC
-        Sort Method: quicksort  Memory: 25kB
-        Buffers: shared hit=539
-        ->  Seq Scan on product_reviews  (cost=0.00..1019.28 rows=2 width=2) (actual time=2.590..3.654 rows=1.00 loops=1)
-              Filter: (product_id = 4321)
-              Rows Removed by Filter: 38661
-              Buffers: shared hit=536
+  Buffers: shared hit=6
+  ->  Index Only Scan Backward using idx_reviews_product_rating on product_reviews  (cost=0.29..8.32 rows=2 width=2) (actual time=0.310..0.311 rows=1.00 loops=1)
+        Index Cond: (product_id = 4321)
+        Heap Fetches: 0
+        Index Searches: 1
+        Buffers: shared hit=6
 Planning:
-  Buffers: shared hit=87
-Planning Time: 0.549 ms
-Execution Time: 3.749 ms
+  Buffers: shared hit=111
+Planning Time: 0.933 ms
+Execution Time: 0.390 ms
 === R03 run 2 ===
-GroupAggregate  (cost=1019.29..1019.32 rows=2 width=10) (actual time=3.293..3.294 rows=1.00 loops=1)
+GroupAggregate  (cost=0.29..8.36 rows=2 width=10) (actual time=0.134..0.135 rows=1.00 loops=1)
   Group Key: rating
-  Buffers: shared hit=539
-  ->  Sort  (cost=1019.29..1019.29 rows=2 width=2) (actual time=3.275..3.277 rows=1.00 loops=1)
-        Sort Key: rating DESC
-        Sort Method: quicksort  Memory: 25kB
-        Buffers: shared hit=539
-        ->  Seq Scan on product_reviews  (cost=0.00..1019.28 rows=2 width=2) (actual time=2.139..3.259 rows=1.00 loops=1)
-              Filter: (product_id = 4321)
-              Rows Removed by Filter: 38661
-              Buffers: shared hit=536
+  Buffers: shared hit=6
+  ->  Index Only Scan Backward using idx_reviews_product_rating on product_reviews  (cost=0.29..8.32 rows=2 width=2) (actual time=0.120..0.121 rows=1.00 loops=1)
+        Index Cond: (product_id = 4321)
+        Heap Fetches: 0
+        Index Searches: 1
+        Buffers: shared hit=6
 Planning:
-  Buffers: shared hit=87
-Planning Time: 0.419 ms
-Execution Time: 3.357 ms
+  Buffers: shared hit=111
+Planning Time: 0.988 ms
+Execution Time: 0.220 ms
 === R03 run 3 ===
-GroupAggregate  (cost=1019.29..1019.32 rows=2 width=10) (actual time=2.930..2.930 rows=1.00 loops=1)
+GroupAggregate  (cost=0.29..8.36 rows=2 width=10) (actual time=0.168..0.169 rows=1.00 loops=1)
   Group Key: rating
-  Buffers: shared hit=539
-  ->  Sort  (cost=1019.29..1019.29 rows=2 width=2) (actual time=2.920..2.921 rows=1.00 loops=1)
-        Sort Key: rating DESC
-        Sort Method: quicksort  Memory: 25kB
-        Buffers: shared hit=539
-        ->  Seq Scan on product_reviews  (cost=0.00..1019.28 rows=2 width=2) (actual time=1.955..2.908 rows=1.00 loops=1)
-              Filter: (product_id = 4321)
-              Rows Removed by Filter: 38661
-              Buffers: shared hit=536
+  Buffers: shared hit=6
+  ->  Index Only Scan Backward using idx_reviews_product_rating on product_reviews  (cost=0.29..8.32 rows=2 width=2) (actual time=0.152..0.153 rows=1.00 loops=1)
+        Index Cond: (product_id = 4321)
+        Heap Fetches: 0
+        Index Searches: 1
+        Buffers: shared hit=6
 Planning:
-  Buffers: shared hit=87
-Planning Time: 0.460 ms
-Execution Time: 2.996 ms
+  Buffers: shared hit=111
+Planning Time: 0.924 ms
+Execution Time: 0.267 ms

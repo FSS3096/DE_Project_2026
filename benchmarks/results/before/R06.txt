@@ -1,75 +1,75 @@
 === R06 run 1 ===
-Sort  (cost=5707.02..5707.03 rows=1 width=33) (actual time=19.072..20.283 rows=1.00 loops=1)
+Sort  (cost=1665.76..1665.77 rows=1 width=33) (actual time=2.343..2.344 rows=1.00 loops=1)
   Sort Key: o.ordered_at
   Sort Method: quicksort  Memory: 25kB
-  Buffers: shared hit=2686
-  ->  Gather  (cost=1000.29..5707.01 rows=1 width=33) (actual time=18.981..20.258 rows=1.00 loops=1)
-        Workers Planned: 1
-        Workers Launched: 1
-        Buffers: shared hit=2683
-        ->  Nested Loop  (cost=0.29..4706.91 rows=1 width=33) (actual time=16.278..16.656 rows=0.50 loops=2)
-              Buffers: shared hit=2683
-              ->  Parallel Seq Scan on order_items oi  (cost=0.00..4020.71 rows=93 width=25) (actual time=0.040..15.686 rows=71.00 loops=2)
-                    Filter: (seller_id = 217)
-                    Rows Removed by Filter: 119929
-                    Buffers: shared hit=2256
-              ->  Index Scan using orders_pkey on orders o  (cost=0.29..7.38 rows=1 width=16) (actual time=0.013..0.013 rows=0.01 loops=142)
-                    Index Cond: (order_id = oi.order_id)
-                    Filter: (date_trunc('month'::text, ordered_at) = '2026-06-01 00:00:00+05:30'::timestamp with time zone)
-                    Rows Removed by Filter: 1
-                    Index Searches: 142
-                    Buffers: shared hit=427
+  Buffers: shared hit=575
+  ->  Nested Loop  (cost=5.81..1665.75 rows=1 width=33) (actual time=2.317..2.318 rows=1.00 loops=1)
+        Buffers: shared hit=572
+        ->  Bitmap Heap Scan on order_items oi  (cost=5.52..499.96 rows=158 width=25) (actual time=0.066..1.027 rows=142.00 loops=1)
+              Recheck Cond: (seller_id = 217)
+              Heap Blocks: exact=141
+              Buffers: shared hit=146
+              ->  Bitmap Index Scan on idx_order_items_seller_id  (cost=0.00..5.48 rows=158 width=0) (actual time=0.036..0.036 rows=142.00 loops=1)
+                    Index Cond: (seller_id = 217)
+                    Index Searches: 1
+                    Buffers: shared hit=5
+        ->  Index Scan using orders_pkey on orders o  (cost=0.29..7.38 rows=1 width=16) (actual time=0.009..0.009 rows=0.01 loops=142)
+              Index Cond: (order_id = oi.order_id)
+              Filter: (date_trunc('month'::text, ordered_at) = '2026-06-01 00:00:00+05:30'::timestamp with time zone)
+              Rows Removed by Filter: 1
+              Index Searches: 142
+              Buffers: shared hit=426
 Planning:
-  Buffers: shared hit=240 dirtied=1
-Planning Time: 1.002 ms
-Execution Time: 20.367 ms
+  Buffers: shared hit=305
+Planning Time: 1.506 ms
+Execution Time: 2.422 ms
 === R06 run 2 ===
-Sort  (cost=5707.02..5707.03 rows=1 width=33) (actual time=6.702..7.835 rows=1.00 loops=1)
+Sort  (cost=1665.76..1665.77 rows=1 width=33) (actual time=2.308..2.310 rows=1.00 loops=1)
   Sort Key: o.ordered_at
   Sort Method: quicksort  Memory: 25kB
-  Buffers: shared hit=2686
-  ->  Gather  (cost=1000.29..5707.01 rows=1 width=33) (actual time=6.660..7.826 rows=1.00 loops=1)
-        Workers Planned: 1
-        Workers Launched: 1
-        Buffers: shared hit=2683
-        ->  Nested Loop  (cost=0.29..4706.91 rows=1 width=33) (actual time=5.247..5.337 rows=0.50 loops=2)
-              Buffers: shared hit=2683
-              ->  Parallel Seq Scan on order_items oi  (cost=0.00..4020.71 rows=93 width=25) (actual time=0.013..5.056 rows=71.00 loops=2)
-                    Filter: (seller_id = 217)
-                    Rows Removed by Filter: 119929
-                    Buffers: shared hit=2256
-              ->  Index Scan using orders_pkey on orders o  (cost=0.29..7.38 rows=1 width=16) (actual time=0.004..0.004 rows=0.01 loops=142)
-                    Index Cond: (order_id = oi.order_id)
-                    Filter: (date_trunc('month'::text, ordered_at) = '2026-06-01 00:00:00+05:30'::timestamp with time zone)
-                    Rows Removed by Filter: 1
-                    Index Searches: 142
-                    Buffers: shared hit=427
+  Buffers: shared hit=575
+  ->  Nested Loop  (cost=5.81..1665.75 rows=1 width=33) (actual time=2.287..2.288 rows=1.00 loops=1)
+        Buffers: shared hit=572
+        ->  Bitmap Heap Scan on order_items oi  (cost=5.52..499.96 rows=158 width=25) (actual time=0.044..0.638 rows=142.00 loops=1)
+              Recheck Cond: (seller_id = 217)
+              Heap Blocks: exact=141
+              Buffers: shared hit=146
+              ->  Bitmap Index Scan on idx_order_items_seller_id  (cost=0.00..5.48 rows=158 width=0) (actual time=0.023..0.023 rows=142.00 loops=1)
+                    Index Cond: (seller_id = 217)
+                    Index Searches: 1
+                    Buffers: shared hit=5
+        ->  Index Scan using orders_pkey on orders o  (cost=0.29..7.38 rows=1 width=16) (actual time=0.011..0.011 rows=0.01 loops=142)
+              Index Cond: (order_id = oi.order_id)
+              Filter: (date_trunc('month'::text, ordered_at) = '2026-06-01 00:00:00+05:30'::timestamp with time zone)
+              Rows Removed by Filter: 1
+              Index Searches: 142
+              Buffers: shared hit=426
 Planning:
-  Buffers: shared hit=240
-Planning Time: 0.394 ms
-Execution Time: 7.866 ms
+  Buffers: shared hit=301
+Planning Time: 1.379 ms
+Execution Time: 2.389 ms
 === R06 run 3 ===
-Sort  (cost=5707.02..5707.03 rows=1 width=33) (actual time=7.203..8.364 rows=1.00 loops=1)
+Sort  (cost=1665.76..1665.77 rows=1 width=33) (actual time=2.525..2.526 rows=1.00 loops=1)
   Sort Key: o.ordered_at
   Sort Method: quicksort  Memory: 25kB
-  Buffers: shared hit=2686
-  ->  Gather  (cost=1000.29..5707.01 rows=1 width=33) (actual time=7.170..8.355 rows=1.00 loops=1)
-        Workers Planned: 1
-        Workers Launched: 1
-        Buffers: shared hit=2683
-        ->  Nested Loop  (cost=0.29..4706.91 rows=1 width=33) (actual time=5.718..5.861 rows=0.50 loops=2)
-              Buffers: shared hit=2683
-              ->  Parallel Seq Scan on order_items oi  (cost=0.00..4020.71 rows=93 width=25) (actual time=0.013..5.590 rows=71.00 loops=2)
-                    Filter: (seller_id = 217)
-                    Rows Removed by Filter: 119929
-                    Buffers: shared hit=2256
-              ->  Index Scan using orders_pkey on orders o  (cost=0.29..7.38 rows=1 width=16) (actual time=0.004..0.004 rows=0.01 loops=142)
-                    Index Cond: (order_id = oi.order_id)
-                    Filter: (date_trunc('month'::text, ordered_at) = '2026-06-01 00:00:00+05:30'::timestamp with time zone)
-                    Rows Removed by Filter: 1
-                    Index Searches: 142
-                    Buffers: shared hit=427
+  Buffers: shared hit=575
+  ->  Nested Loop  (cost=5.81..1665.75 rows=1 width=33) (actual time=2.497..2.498 rows=1.00 loops=1)
+        Buffers: shared hit=572
+        ->  Bitmap Heap Scan on order_items oi  (cost=5.52..499.96 rows=158 width=25) (actual time=0.066..0.710 rows=142.00 loops=1)
+              Recheck Cond: (seller_id = 217)
+              Heap Blocks: exact=141
+              Buffers: shared hit=146
+              ->  Bitmap Index Scan on idx_order_items_seller_id  (cost=0.00..5.48 rows=158 width=0) (actual time=0.039..0.039 rows=142.00 loops=1)
+                    Index Cond: (seller_id = 217)
+                    Index Searches: 1
+                    Buffers: shared hit=5
+        ->  Index Scan using orders_pkey on orders o  (cost=0.29..7.38 rows=1 width=16) (actual time=0.012..0.012 rows=0.01 loops=142)
+              Index Cond: (order_id = oi.order_id)
+              Filter: (date_trunc('month'::text, ordered_at) = '2026-06-01 00:00:00+05:30'::timestamp with time zone)
+              Rows Removed by Filter: 1
+              Index Searches: 142
+              Buffers: shared hit=426
 Planning:
-  Buffers: shared hit=240
-Planning Time: 0.350 ms
-Execution Time: 8.392 ms
+  Buffers: shared hit=301
+Planning Time: 1.593 ms
+Execution Time: 2.603 ms

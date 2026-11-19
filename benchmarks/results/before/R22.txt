@@ -1,39 +1,30 @@
 === R22 run 1 ===
-Limit  (cost=16330.10..16330.17 rows=25 width=38) (actual time=28.610..28.613 rows=25.00 loops=1)
-  Buffers: shared hit=1539, temp read=652 written=768
-  ->  Sort  (cost=16142.60..16442.60 rows=120000 width=38) (actual time=24.115..27.088 rows=75025.00 loops=1)
-        Sort Key: ordered_at DESC
-        Sort Method: external merge  Disk: 6128kB
-        Buffers: shared hit=1539, temp read=652 written=768
-        ->  Seq Scan on orders  (cost=0.00..2736.00 rows=120000 width=38) (actual time=0.004..7.289 rows=120000.00 loops=1)
-              Buffers: shared hit=1536
+Limit  (cost=2912.17..2913.14 rows=25 width=38) (actual time=12.578..12.583 rows=25.00 loops=1)
+  Buffers: shared hit=1149
+  ->  Index Scan Backward using idx_orders_ordered_at on orders  (cost=0.29..4659.30 rows=120000 width=38) (actual time=0.012..10.039 rows=75025.00 loops=1)
+        Index Searches: 1
+        Buffers: shared hit=1149
 Planning:
-  Buffers: shared hit=89
-Planning Time: 0.152 ms
-Execution Time: 29.716 ms
+  Buffers: shared hit=119
+Planning Time: 0.395 ms
+Execution Time: 12.605 ms
 === R22 run 2 ===
-Limit  (cost=16330.10..16330.17 rows=25 width=38) (actual time=24.218..24.220 rows=25.00 loops=1)
-  Buffers: shared hit=1539, temp read=652 written=768
-  ->  Sort  (cost=16142.60..16442.60 rows=120000 width=38) (actual time=20.420..22.925 rows=75025.00 loops=1)
-        Sort Key: ordered_at DESC
-        Sort Method: external merge  Disk: 6128kB
-        Buffers: shared hit=1539, temp read=652 written=768
-        ->  Seq Scan on orders  (cost=0.00..2736.00 rows=120000 width=38) (actual time=0.004..6.200 rows=120000.00 loops=1)
-              Buffers: shared hit=1536
+Limit  (cost=2912.17..2913.14 rows=25 width=38) (actual time=12.907..12.911 rows=25.00 loops=1)
+  Buffers: shared hit=1149
+  ->  Index Scan Backward using idx_orders_ordered_at on orders  (cost=0.29..4659.30 rows=120000 width=38) (actual time=0.014..10.272 rows=75025.00 loops=1)
+        Index Searches: 1
+        Buffers: shared hit=1149
 Planning:
-  Buffers: shared hit=89
-Planning Time: 0.152 ms
-Execution Time: 26.119 ms
+  Buffers: shared hit=119
+Planning Time: 0.395 ms
+Execution Time: 12.937 ms
 === R22 run 3 ===
-Limit  (cost=16330.10..16330.17 rows=25 width=38) (actual time=23.014..23.016 rows=25.00 loops=1)
-  Buffers: shared hit=1539, temp read=652 written=768
-  ->  Sort  (cost=16142.60..16442.60 rows=120000 width=38) (actual time=19.215..21.704 rows=75025.00 loops=1)
-        Sort Key: ordered_at DESC
-        Sort Method: external merge  Disk: 6128kB
-        Buffers: shared hit=1539, temp read=652 written=768
-        ->  Seq Scan on orders  (cost=0.00..2736.00 rows=120000 width=38) (actual time=0.004..5.929 rows=120000.00 loops=1)
-              Buffers: shared hit=1536
+Limit  (cost=2912.17..2913.14 rows=25 width=38) (actual time=12.947..12.952 rows=25.00 loops=1)
+  Buffers: shared hit=1149
+  ->  Index Scan Backward using idx_orders_ordered_at on orders  (cost=0.29..4659.30 rows=120000 width=38) (actual time=0.014..10.407 rows=75025.00 loops=1)
+        Index Searches: 1
+        Buffers: shared hit=1149
 Planning:
-  Buffers: shared hit=89
-Planning Time: 0.161 ms
-Execution Time: 24.142 ms
+  Buffers: shared hit=119
+Planning Time: 0.413 ms
+Execution Time: 12.978 ms

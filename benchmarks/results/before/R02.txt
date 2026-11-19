@@ -1,132 +1,132 @@
 === R02 run 1 ===
-Limit  (cost=1352.91..1353.03 rows=48 width=39) (actual time=6.051..6.056 rows=48.00 loops=1)
+Limit  (cost=1352.91..1353.03 rows=48 width=39) (actual time=6.591..6.600 rows=48.00 loops=1)
   Buffers: shared hit=558
   CTE tree
-    ->  Recursive Union  (cost=0.00..26.66 rows=321 width=8) (actual time=0.008..0.061 rows=5.00 loops=1)
+    ->  Recursive Union  (cost=0.00..26.66 rows=321 width=8) (actual time=0.008..0.085 rows=5.00 loops=1)
           Storage: Memory  Maximum Storage: 33kB
           Buffers: shared hit=3
           ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=8) (actual time=0.007..0.010 rows=1.00 loops=1)
                 Filter: ((category_name)::text = 'Electronics'::text)
                 Rows Removed by Filter: 39
                 Buffers: shared hit=1
-          ->  Hash Join  (cost=0.33..2.20 rows=32 width=8) (actual time=0.012..0.014 rows=2.00 loops=2)
+          ->  Hash Join  (cost=0.33..2.20 rows=32 width=8) (actual time=0.031..0.033 rows=2.00 loops=2)
                 Hash Cond: (c.parent_category_id = t.category_id)
                 Buffers: shared hit=2
-                ->  Seq Scan on categories c  (cost=0.00..1.40 rows=40 width=16) (actual time=0.001..0.003 rows=40.00 loops=2)
+                ->  Seq Scan on categories c  (cost=0.00..1.40 rows=40 width=16) (actual time=0.003..0.005 rows=40.00 loops=2)
                       Buffers: shared hit=2
-                ->  Hash  (cost=0.20..0.20 rows=10 width=8) (actual time=0.005..0.005 rows=2.50 loops=2)
+                ->  Hash  (cost=0.20..0.20 rows=10 width=8) (actual time=0.007..0.007 rows=2.50 loops=2)
                       Buckets: 1024  Batches: 1  Memory Usage: 9kB
                       ->  WorkTable Scan on tree t  (cost=0.00..0.20 rows=10 width=8) (actual time=0.000..0.000 rows=2.50 loops=2)
-  ->  Sort  (cost=1326.25..1338.29 rows=4818 width=39) (actual time=6.050..6.051 rows=48.00 loops=1)
+  ->  Sort  (cost=1326.25..1338.29 rows=4818 width=39) (actual time=6.590..6.593 rows=48.00 loops=1)
         Sort Key: p.price
         Sort Method: top-N heapsort  Memory: 30kB
         Buffers: shared hit=558
-        ->  Hash Join  (cost=11.72..1167.61 rows=4818 width=39) (actual time=0.095..5.858 rows=809.00 loops=1)
+        ->  Hash Join  (cost=11.72..1167.61 rows=4818 width=39) (actual time=0.127..6.380 rows=809.00 loops=1)
               Hash Cond: (p.category_id = tree.category_id)
               Buffers: shared hit=555
-              ->  Seq Scan on products p  (cost=0.00..1077.00 rows=9635 width=47) (actual time=0.009..5.248 rows=9601.00 loops=1)
+              ->  Seq Scan on products p  (cost=0.00..1077.00 rows=9635 width=47) (actual time=0.010..5.705 rows=9601.00 loops=1)
                     Filter: ((price >= '1000'::numeric) AND (price <= '5000'::numeric) AND ((status)::text = 'ACTIVE'::text))
                     Rows Removed by Filter: 20399
                     Buffers: shared hit=552
-              ->  Hash  (cost=9.22..9.22 rows=200 width=8) (actual time=0.073..0.073 rows=5.00 loops=1)
+              ->  Hash  (cost=9.22..9.22 rows=200 width=8) (actual time=0.097..0.097 rows=5.00 loops=1)
                     Buckets: 1024  Batches: 1  Memory Usage: 9kB
                     Buffers: shared hit=3
-                    ->  HashAggregate  (cost=7.22..9.22 rows=200 width=8) (actual time=0.069..0.070 rows=5.00 loops=1)
+                    ->  HashAggregate  (cost=7.22..9.22 rows=200 width=8) (actual time=0.092..0.094 rows=5.00 loops=1)
                           Group Key: tree.category_id
                           Batches: 1  Memory Usage: 32kB
                           Buffers: shared hit=3
-                          ->  CTE Scan on tree  (cost=0.00..6.42 rows=321 width=8) (actual time=0.009..0.064 rows=5.00 loops=1)
+                          ->  CTE Scan on tree  (cost=0.00..6.42 rows=321 width=8) (actual time=0.010..0.086 rows=5.00 loops=1)
                                 Storage: Memory  Maximum Storage: 17kB
                                 Buffers: shared hit=3
 Planning:
-  Buffers: shared hit=272 dirtied=1
-Planning Time: 0.941 ms
-Execution Time: 6.125 ms
+  Buffers: shared hit=285
+Planning Time: 1.171 ms
+Execution Time: 6.693 ms
 === R02 run 2 ===
-Limit  (cost=1352.91..1353.03 rows=48 width=39) (actual time=5.063..5.069 rows=48.00 loops=1)
+Limit  (cost=1352.91..1353.03 rows=48 width=39) (actual time=7.354..7.363 rows=48.00 loops=1)
   Buffers: shared hit=558
   CTE tree
-    ->  Recursive Union  (cost=0.00..26.66 rows=321 width=8) (actual time=0.005..0.036 rows=5.00 loops=1)
+    ->  Recursive Union  (cost=0.00..26.66 rows=321 width=8) (actual time=0.008..0.055 rows=5.00 loops=1)
           Storage: Memory  Maximum Storage: 33kB
           Buffers: shared hit=3
-          ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=8) (actual time=0.005..0.007 rows=1.00 loops=1)
+          ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=8) (actual time=0.007..0.010 rows=1.00 loops=1)
                 Filter: ((category_name)::text = 'Electronics'::text)
                 Rows Removed by Filter: 39
                 Buffers: shared hit=1
-          ->  Hash Join  (cost=0.33..2.20 rows=32 width=8) (actual time=0.009..0.012 rows=2.00 loops=2)
+          ->  Hash Join  (cost=0.33..2.20 rows=32 width=8) (actual time=0.017..0.019 rows=2.00 loops=2)
                 Hash Cond: (c.parent_category_id = t.category_id)
                 Buffers: shared hit=2
-                ->  Seq Scan on categories c  (cost=0.00..1.40 rows=40 width=16) (actual time=0.001..0.003 rows=40.00 loops=2)
-                      Buffers: shared hit=2
-                ->  Hash  (cost=0.20..0.20 rows=10 width=8) (actual time=0.002..0.002 rows=2.50 loops=2)
-                      Buckets: 1024  Batches: 1  Memory Usage: 9kB
-                      ->  WorkTable Scan on tree t  (cost=0.00..0.20 rows=10 width=8) (actual time=0.000..0.000 rows=2.50 loops=2)
-  ->  Sort  (cost=1326.25..1338.29 rows=4818 width=39) (actual time=5.062..5.064 rows=48.00 loops=1)
-        Sort Key: p.price
-        Sort Method: top-N heapsort  Memory: 30kB
-        Buffers: shared hit=558
-        ->  Hash Join  (cost=11.72..1167.61 rows=4818 width=39) (actual time=0.068..4.889 rows=809.00 loops=1)
-              Hash Cond: (p.category_id = tree.category_id)
-              Buffers: shared hit=555
-              ->  Seq Scan on products p  (cost=0.00..1077.00 rows=9635 width=47) (actual time=0.007..4.361 rows=9601.00 loops=1)
-                    Filter: ((price >= '1000'::numeric) AND (price <= '5000'::numeric) AND ((status)::text = 'ACTIVE'::text))
-                    Rows Removed by Filter: 20399
-                    Buffers: shared hit=552
-              ->  Hash  (cost=9.22..9.22 rows=200 width=8) (actual time=0.047..0.047 rows=5.00 loops=1)
-                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
-                    Buffers: shared hit=3
-                    ->  HashAggregate  (cost=7.22..9.22 rows=200 width=8) (actual time=0.043..0.044 rows=5.00 loops=1)
-                          Group Key: tree.category_id
-                          Batches: 1  Memory Usage: 32kB
-                          Buffers: shared hit=3
-                          ->  CTE Scan on tree  (cost=0.00..6.42 rows=321 width=8) (actual time=0.006..0.037 rows=5.00 loops=1)
-                                Storage: Memory  Maximum Storage: 17kB
-                                Buffers: shared hit=3
-Planning:
-  Buffers: shared hit=272
-Planning Time: 0.695 ms
-Execution Time: 5.141 ms
-=== R02 run 3 ===
-Limit  (cost=1352.91..1353.03 rows=48 width=39) (actual time=5.451..5.455 rows=48.00 loops=1)
-  Buffers: shared hit=558
-  CTE tree
-    ->  Recursive Union  (cost=0.00..26.66 rows=321 width=8) (actual time=0.010..0.092 rows=5.00 loops=1)
-          Storage: Memory  Maximum Storage: 33kB
-          Buffers: shared hit=3
-          ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=8) (actual time=0.009..0.011 rows=1.00 loops=1)
-                Filter: ((category_name)::text = 'Electronics'::text)
-                Rows Removed by Filter: 39
-                Buffers: shared hit=1
-          ->  Hash Join  (cost=0.33..2.20 rows=32 width=8) (actual time=0.016..0.019 rows=2.00 loops=2)
-                Hash Cond: (c.parent_category_id = t.category_id)
-                Buffers: shared hit=2
-                ->  Seq Scan on categories c  (cost=0.00..1.40 rows=40 width=16) (actual time=0.002..0.003 rows=40.00 loops=2)
+                ->  Seq Scan on categories c  (cost=0.00..1.40 rows=40 width=16) (actual time=0.003..0.005 rows=40.00 loops=2)
                       Buffers: shared hit=2
                 ->  Hash  (cost=0.20..0.20 rows=10 width=8) (actual time=0.008..0.008 rows=2.50 loops=2)
                       Buckets: 1024  Batches: 1  Memory Usage: 9kB
                       ->  WorkTable Scan on tree t  (cost=0.00..0.20 rows=10 width=8) (actual time=0.000..0.000 rows=2.50 loops=2)
-  ->  Sort  (cost=1326.25..1338.29 rows=4818 width=39) (actual time=5.449..5.451 rows=48.00 loops=1)
+  ->  Sort  (cost=1326.25..1338.29 rows=4818 width=39) (actual time=7.353..7.356 rows=48.00 loops=1)
         Sort Key: p.price
         Sort Method: top-N heapsort  Memory: 30kB
         Buffers: shared hit=558
-        ->  Hash Join  (cost=11.72..1167.61 rows=4818 width=39) (actual time=0.140..5.263 rows=809.00 loops=1)
+        ->  Hash Join  (cost=11.72..1167.61 rows=4818 width=39) (actual time=0.126..7.114 rows=809.00 loops=1)
               Hash Cond: (p.category_id = tree.category_id)
               Buffers: shared hit=555
-              ->  Seq Scan on products p  (cost=0.00..1077.00 rows=9635 width=47) (actual time=0.011..4.627 rows=9601.00 loops=1)
+              ->  Seq Scan on products p  (cost=0.00..1077.00 rows=9635 width=47) (actual time=0.010..6.292 rows=9601.00 loops=1)
                     Filter: ((price >= '1000'::numeric) AND (price <= '5000'::numeric) AND ((status)::text = 'ACTIVE'::text))
                     Rows Removed by Filter: 20399
                     Buffers: shared hit=552
-              ->  Hash  (cost=9.22..9.22 rows=200 width=8) (actual time=0.112..0.113 rows=5.00 loops=1)
+              ->  Hash  (cost=9.22..9.22 rows=200 width=8) (actual time=0.097..0.098 rows=5.00 loops=1)
                     Buckets: 1024  Batches: 1  Memory Usage: 9kB
                     Buffers: shared hit=3
-                    ->  HashAggregate  (cost=7.22..9.22 rows=200 width=8) (actual time=0.104..0.105 rows=5.00 loops=1)
+                    ->  HashAggregate  (cost=7.22..9.22 rows=200 width=8) (actual time=0.064..0.065 rows=5.00 loops=1)
                           Group Key: tree.category_id
                           Batches: 1  Memory Usage: 32kB
                           Buffers: shared hit=3
-                          ->  CTE Scan on tree  (cost=0.00..6.42 rows=321 width=8) (actual time=0.012..0.097 rows=5.00 loops=1)
+                          ->  CTE Scan on tree  (cost=0.00..6.42 rows=321 width=8) (actual time=0.011..0.058 rows=5.00 loops=1)
                                 Storage: Memory  Maximum Storage: 17kB
                                 Buffers: shared hit=3
 Planning:
-  Buffers: shared hit=272
-Planning Time: 0.972 ms
-Execution Time: 5.544 ms
+  Buffers: shared hit=285
+Planning Time: 1.145 ms
+Execution Time: 7.466 ms
+=== R02 run 3 ===
+Limit  (cost=1352.91..1353.03 rows=48 width=39) (actual time=7.153..7.161 rows=48.00 loops=1)
+  Buffers: shared hit=558
+  CTE tree
+    ->  Recursive Union  (cost=0.00..26.66 rows=321 width=8) (actual time=0.009..0.050 rows=5.00 loops=1)
+          Storage: Memory  Maximum Storage: 33kB
+          Buffers: shared hit=3
+          ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=8) (actual time=0.007..0.010 rows=1.00 loops=1)
+                Filter: ((category_name)::text = 'Electronics'::text)
+                Rows Removed by Filter: 39
+                Buffers: shared hit=1
+          ->  Hash Join  (cost=0.33..2.20 rows=32 width=8) (actual time=0.015..0.017 rows=2.00 loops=2)
+                Hash Cond: (c.parent_category_id = t.category_id)
+                Buffers: shared hit=2
+                ->  Seq Scan on categories c  (cost=0.00..1.40 rows=40 width=16) (actual time=0.003..0.004 rows=40.00 loops=2)
+                      Buffers: shared hit=2
+                ->  Hash  (cost=0.20..0.20 rows=10 width=8) (actual time=0.006..0.007 rows=2.50 loops=2)
+                      Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                      ->  WorkTable Scan on tree t  (cost=0.00..0.20 rows=10 width=8) (actual time=0.000..0.000 rows=2.50 loops=2)
+  ->  Sort  (cost=1326.25..1338.29 rows=4818 width=39) (actual time=7.150..7.153 rows=48.00 loops=1)
+        Sort Key: p.price
+        Sort Method: top-N heapsort  Memory: 30kB
+        Buffers: shared hit=558
+        ->  Hash Join  (cost=11.72..1167.61 rows=4818 width=39) (actual time=0.093..6.949 rows=809.00 loops=1)
+              Hash Cond: (p.category_id = tree.category_id)
+              Buffers: shared hit=555
+              ->  Seq Scan on products p  (cost=0.00..1077.00 rows=9635 width=47) (actual time=0.010..6.323 rows=9601.00 loops=1)
+                    Filter: ((price >= '1000'::numeric) AND (price <= '5000'::numeric) AND ((status)::text = 'ACTIVE'::text))
+                    Rows Removed by Filter: 20399
+                    Buffers: shared hit=552
+              ->  Hash  (cost=9.22..9.22 rows=200 width=8) (actual time=0.064..0.064 rows=5.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    Buffers: shared hit=3
+                    ->  HashAggregate  (cost=7.22..9.22 rows=200 width=8) (actual time=0.060..0.061 rows=5.00 loops=1)
+                          Group Key: tree.category_id
+                          Batches: 1  Memory Usage: 32kB
+                          Buffers: shared hit=3
+                          ->  CTE Scan on tree  (cost=0.00..6.42 rows=321 width=8) (actual time=0.011..0.052 rows=5.00 loops=1)
+                                Storage: Memory  Maximum Storage: 17kB
+                                Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=285
+Planning Time: 1.161 ms
+Execution Time: 7.265 ms

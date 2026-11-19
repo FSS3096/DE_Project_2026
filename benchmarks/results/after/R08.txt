@@ -1,129 +1,135 @@
 === R08 run 1 ===
-Incremental Sort  (cost=10993.56..11747.12 rows=12118 width=32) (actual time=45.014..45.547 rows=633.00 loops=1)
+Incremental Sort  (cost=7979.87..8750.98 rows=12372 width=32) (actual time=47.117..47.869 rows=633.00 loops=1)
   Sort Key: p.category_id, (rank() OVER w1)
   Presorted Key: p.category_id
   Full-sort Groups: 15  Sort Method: quicksort  Average Memory: 27kB  Peak Memory: 27kB
-  Buffers: shared hit=4347
-  ->  WindowAgg  (cost=10990.55..11232.89 rows=12118 width=32) (actual time=44.944..45.472 rows=633.00 loops=1)
+  Buffers: shared hit=2922
+  ->  WindowAgg  (cost=7976.79..8224.21 rows=12372 width=32) (actual time=47.026..47.767 rows=633.00 loops=1)
         Window: w1 AS (PARTITION BY p.category_id ORDER BY (sum(oi.quantity)) ROWS UNBOUNDED PRECEDING)
         Run Condition: (rank() OVER w1 <= 5)
         Storage: Memory  Maximum Storage: 17kB
-        Buffers: shared hit=4344
-        ->  Sort  (cost=10990.53..11020.82 rows=12118 width=24) (actual time=44.940..45.125 rows=7521.00 loops=1)
+        Buffers: shared hit=2919
+        ->  Sort  (cost=7976.77..8007.70 rows=12372 width=24) (actual time=47.022..47.286 rows=7521.00 loops=1)
               Sort Key: p.category_id, (sum(oi.quantity)) DESC
               Sort Method: quicksort  Memory: 486kB
-              Buffers: shared hit=4344
-              ->  HashAggregate  (cost=10047.45..10168.63 rows=12118 width=24) (actual time=43.741..44.170 rows=7521.00 loops=1)
+              Buffers: shared hit=2919
+              ->  HashAggregate  (cost=7012.08..7135.80 rows=12372 width=24) (actual time=45.190..45.822 rows=7521.00 loops=1)
                     Group Key: p.category_id, oi.product_id
                     Batches: 1  Memory Usage: 793kB
-                    Buffers: shared hit=4344
-                    ->  Hash Join  (cost=4638.74..9956.57 rows=12118 width=20) (actual time=38.835..42.327 rows=12395.00 loops=1)
+                    Buffers: shared hit=2919
+                    ->  Hash Join  (cost=1600.79..6919.29 rows=12372 width=20) (actual time=38.721..43.320 rows=12395.00 loops=1)
                           Hash Cond: (oi.product_id = p.product_id)
-                          Buffers: shared hit=4344
-                          ->  Hash Join  (cost=3411.74..8697.76 rows=12118 width=12) (actual time=30.656..32.480 rows=12395.00 loops=1)
+                          Buffers: shared hit=2919
+                          ->  Hash Join  (cost=373.79..5659.81 rows=12372 width=12) (actual time=32.321..34.837 rows=12395.00 loops=1)
                                 Hash Cond: (oi.order_id = o.order_id)
-                                Buffers: shared hit=3792
-                                ->  Seq Scan on order_items oi  (cost=0.00..4656.00 rows=240000 width=20) (actual time=0.031..9.426 rows=240000.00 loops=1)
+                                Buffers: shared hit=2367
+                                ->  Seq Scan on order_items oi  (cost=0.00..4656.00 rows=240000 width=20) (actual time=0.008..14.937 rows=240000.00 loops=1)
                                       Buffers: shared hit=2256
-                                ->  Hash  (cost=3336.00..3336.00 rows=6059 width=8) (actual time=10.792..10.792 rows=6189.00 loops=1)
+                                ->  Hash  (cost=296.46..296.46 rows=6186 width=8) (actual time=1.706..1.707 rows=6189.00 loops=1)
                                       Buckets: 8192  Batches: 1  Memory Usage: 306kB
-                                      Buffers: shared hit=1536
-                                      ->  Seq Scan on orders o  (cost=0.00..3336.00 rows=6059 width=8) (actual time=9.326..10.288 rows=6189.00 loops=1)
-                                            Filter: ((ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND ((status)::text <> 'CANCELLED'::text))
-                                            Rows Removed by Filter: 113811
-                                            Buffers: shared hit=1536
-                          ->  Hash  (cost=852.00..852.00 rows=30000 width=16) (actual time=8.124..8.124 rows=30000.00 loops=1)
+                                      Buffers: shared hit=111
+                                      ->  Index Scan using idx_orders_ordered_at on orders o  (cost=0.29..296.46 rows=6186 width=8) (actual time=0.019..1.160 rows=6189.00 loops=1)
+                                            Index Cond: (ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone)
+                                            Filter: ((status)::text <> 'CANCELLED'::text)
+                                            Rows Removed by Filter: 404
+                                            Index Searches: 1
+                                            Buffers: shared hit=111
+                          ->  Hash  (cost=852.00..852.00 rows=30000 width=16) (actual time=6.340..6.340 rows=30000.00 loops=1)
                                 Buckets: 32768  Batches: 1  Memory Usage: 1663kB
                                 Buffers: shared hit=552
-                                ->  Seq Scan on products p  (cost=0.00..852.00 rows=30000 width=16) (actual time=0.012..4.286 rows=30000.00 loops=1)
+                                ->  Seq Scan on products p  (cost=0.00..852.00 rows=30000 width=16) (actual time=0.017..3.984 rows=30000.00 loops=1)
                                       Buffers: shared hit=552
 Planning:
-  Buffers: shared hit=265 read=2
-Planning Time: 1.972 ms
-Execution Time: 45.753 ms
+  Buffers: shared hit=336
+Planning Time: 1.569 ms
+Execution Time: 48.004 ms
 === R08 run 2 ===
-Incremental Sort  (cost=10993.56..11747.12 rows=12118 width=32) (actual time=29.835..30.249 rows=633.00 loops=1)
+Incremental Sort  (cost=7979.87..8750.98 rows=12372 width=32) (actual time=44.607..45.487 rows=633.00 loops=1)
   Sort Key: p.category_id, (rank() OVER w1)
   Presorted Key: p.category_id
   Full-sort Groups: 15  Sort Method: quicksort  Average Memory: 27kB  Peak Memory: 27kB
-  Buffers: shared hit=4347
-  ->  WindowAgg  (cost=10990.55..11232.89 rows=12118 width=32) (actual time=29.785..30.198 rows=633.00 loops=1)
+  Buffers: shared hit=2914
+  ->  WindowAgg  (cost=7976.79..8224.21 rows=12372 width=32) (actual time=44.513..45.379 rows=633.00 loops=1)
         Window: w1 AS (PARTITION BY p.category_id ORDER BY (sum(oi.quantity)) ROWS UNBOUNDED PRECEDING)
         Run Condition: (rank() OVER w1 <= 5)
         Storage: Memory  Maximum Storage: 17kB
-        Buffers: shared hit=4344
-        ->  Sort  (cost=10990.53..11020.82 rows=12118 width=24) (actual time=29.783..29.932 rows=7521.00 loops=1)
+        Buffers: shared hit=2911
+        ->  Sort  (cost=7976.77..8007.70 rows=12372 width=24) (actual time=44.505..44.791 rows=7521.00 loops=1)
               Sort Key: p.category_id, (sum(oi.quantity)) DESC
               Sort Method: quicksort  Memory: 486kB
-              Buffers: shared hit=4344
-              ->  HashAggregate  (cost=10047.45..10168.63 rows=12118 width=24) (actual time=28.774..29.123 rows=7521.00 loops=1)
+              Buffers: shared hit=2911
+              ->  HashAggregate  (cost=7012.08..7135.80 rows=12372 width=24) (actual time=42.214..43.173 rows=7521.00 loops=1)
                     Group Key: p.category_id, oi.product_id
                     Batches: 1  Memory Usage: 793kB
-                    Buffers: shared hit=4344
-                    ->  Hash Join  (cost=4638.74..9956.57 rows=12118 width=20) (actual time=25.005..27.679 rows=12395.00 loops=1)
+                    Buffers: shared hit=2911
+                    ->  Hash Join  (cost=1600.79..6919.29 rows=12372 width=20) (actual time=32.665..39.238 rows=12395.00 loops=1)
                           Hash Cond: (oi.product_id = p.product_id)
-                          Buffers: shared hit=4344
-                          ->  Hash Join  (cost=3411.74..8697.76 rows=12118 width=12) (actual time=20.764..22.123 rows=12395.00 loops=1)
+                          Buffers: shared hit=2911
+                          ->  Hash Join  (cost=373.79..5659.81 rows=12372 width=12) (actual time=25.365..28.540 rows=12395.00 loops=1)
                                 Hash Cond: (oi.order_id = o.order_id)
-                                Buffers: shared hit=3792
-                                ->  Seq Scan on order_items oi  (cost=0.00..4656.00 rows=240000 width=20) (actual time=0.002..6.794 rows=240000.00 loops=1)
+                                Buffers: shared hit=2359
+                                ->  Seq Scan on order_items oi  (cost=0.00..4656.00 rows=240000 width=20) (actual time=0.005..11.708 rows=240000.00 loops=1)
                                       Buffers: shared hit=2256
-                                ->  Hash  (cost=3336.00..3336.00 rows=6059 width=8) (actual time=6.460..6.460 rows=6189.00 loops=1)
+                                ->  Hash  (cost=296.46..296.46 rows=6186 width=8) (actual time=1.656..1.656 rows=6189.00 loops=1)
                                       Buckets: 8192  Batches: 1  Memory Usage: 306kB
-                                      Buffers: shared hit=1536
-                                      ->  Seq Scan on orders o  (cost=0.00..3336.00 rows=6059 width=8) (actual time=5.524..6.143 rows=6189.00 loops=1)
-                                            Filter: ((ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND ((status)::text <> 'CANCELLED'::text))
-                                            Rows Removed by Filter: 113811
-                                            Buffers: shared hit=1536
-                          ->  Hash  (cost=852.00..852.00 rows=30000 width=16) (actual time=4.219..4.219 rows=30000.00 loops=1)
+                                      Buffers: shared hit=103
+                                      ->  Index Scan using idx_orders_ordered_at on orders o  (cost=0.29..296.46 rows=6186 width=8) (actual time=0.017..1.182 rows=6189.00 loops=1)
+                                            Index Cond: (ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone)
+                                            Filter: ((status)::text <> 'CANCELLED'::text)
+                                            Rows Removed by Filter: 404
+                                            Index Searches: 1
+                                            Buffers: shared hit=103
+                          ->  Hash  (cost=852.00..852.00 rows=30000 width=16) (actual time=7.255..7.256 rows=30000.00 loops=1)
                                 Buckets: 32768  Batches: 1  Memory Usage: 1663kB
                                 Buffers: shared hit=552
-                                ->  Seq Scan on products p  (cost=0.00..852.00 rows=30000 width=16) (actual time=0.005..2.379 rows=30000.00 loops=1)
+                                ->  Seq Scan on products p  (cost=0.00..852.00 rows=30000 width=16) (actual time=0.011..4.651 rows=30000.00 loops=1)
                                       Buffers: shared hit=552
 Planning:
-  Buffers: shared hit=267
-Planning Time: 0.739 ms
-Execution Time: 30.340 ms
+  Buffers: shared hit=336
+Planning Time: 1.264 ms
+Execution Time: 45.634 ms
 === R08 run 3 ===
-Incremental Sort  (cost=10993.56..11747.12 rows=12118 width=32) (actual time=25.021..25.379 rows=633.00 loops=1)
+Incremental Sort  (cost=7979.87..8750.98 rows=12372 width=32) (actual time=40.483..41.236 rows=633.00 loops=1)
   Sort Key: p.category_id, (rank() OVER w1)
   Presorted Key: p.category_id
   Full-sort Groups: 15  Sort Method: quicksort  Average Memory: 27kB  Peak Memory: 27kB
-  Buffers: shared hit=4347
-  ->  WindowAgg  (cost=10990.55..11232.89 rows=12118 width=32) (actual time=24.979..25.335 rows=633.00 loops=1)
+  Buffers: shared hit=2914
+  ->  WindowAgg  (cost=7976.79..8224.21 rows=12372 width=32) (actual time=40.393..41.136 rows=633.00 loops=1)
         Window: w1 AS (PARTITION BY p.category_id ORDER BY (sum(oi.quantity)) ROWS UNBOUNDED PRECEDING)
         Run Condition: (rank() OVER w1 <= 5)
         Storage: Memory  Maximum Storage: 17kB
-        Buffers: shared hit=4344
-        ->  Sort  (cost=10990.53..11020.82 rows=12118 width=24) (actual time=24.973..25.101 rows=7521.00 loops=1)
+        Buffers: shared hit=2911
+        ->  Sort  (cost=7976.77..8007.70 rows=12372 width=24) (actual time=40.388..40.653 rows=7521.00 loops=1)
               Sort Key: p.category_id, (sum(oi.quantity)) DESC
               Sort Method: quicksort  Memory: 486kB
-              Buffers: shared hit=4344
-              ->  HashAggregate  (cost=10047.45..10168.63 rows=12118 width=24) (actual time=24.079..24.393 rows=7521.00 loops=1)
+              Buffers: shared hit=2911
+              ->  HashAggregate  (cost=7012.08..7135.80 rows=12372 width=24) (actual time=38.544..39.166 rows=7521.00 loops=1)
                     Group Key: p.category_id, oi.product_id
                     Batches: 1  Memory Usage: 793kB
-                    Buffers: shared hit=4344
-                    ->  Hash Join  (cost=4638.74..9956.57 rows=12118 width=20) (actual time=20.823..23.128 rows=12395.00 loops=1)
+                    Buffers: shared hit=2911
+                    ->  Hash Join  (cost=1600.79..6919.29 rows=12372 width=20) (actual time=31.864..36.667 rows=12395.00 loops=1)
                           Hash Cond: (oi.product_id = p.product_id)
-                          Buffers: shared hit=4344
-                          ->  Hash Join  (cost=3411.74..8697.76 rows=12118 width=12) (actual time=17.515..18.670 rows=12395.00 loops=1)
+                          Buffers: shared hit=2911
+                          ->  Hash Join  (cost=373.79..5659.81 rows=12372 width=12) (actual time=26.053..28.671 rows=12395.00 loops=1)
                                 Hash Cond: (oi.order_id = o.order_id)
-                                Buffers: shared hit=3792
-                                ->  Seq Scan on order_items oi  (cost=0.00..4656.00 rows=240000 width=20) (actual time=0.002..5.839 rows=240000.00 loops=1)
+                                Buffers: shared hit=2359
+                                ->  Seq Scan on order_items oi  (cost=0.00..4656.00 rows=240000 width=20) (actual time=0.011..11.998 rows=240000.00 loops=1)
                                       Buffers: shared hit=2256
-                                ->  Hash  (cost=3336.00..3336.00 rows=6059 width=8) (actual time=5.479..5.480 rows=6189.00 loops=1)
+                                ->  Hash  (cost=296.46..296.46 rows=6186 width=8) (actual time=1.749..1.750 rows=6189.00 loops=1)
                                       Buckets: 8192  Batches: 1  Memory Usage: 306kB
-                                      Buffers: shared hit=1536
-                                      ->  Seq Scan on orders o  (cost=0.00..3336.00 rows=6059 width=8) (actual time=4.695..5.209 rows=6189.00 loops=1)
-                                            Filter: ((ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND ((status)::text <> 'CANCELLED'::text))
-                                            Rows Removed by Filter: 113811
-                                            Buffers: shared hit=1536
-                          ->  Hash  (cost=852.00..852.00 rows=30000 width=16) (actual time=3.289..3.289 rows=30000.00 loops=1)
+                                      Buffers: shared hit=103
+                                      ->  Index Scan using idx_orders_ordered_at on orders o  (cost=0.29..296.46 rows=6186 width=8) (actual time=0.021..1.207 rows=6189.00 loops=1)
+                                            Index Cond: (ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone)
+                                            Filter: ((status)::text <> 'CANCELLED'::text)
+                                            Rows Removed by Filter: 404
+                                            Index Searches: 1
+                                            Buffers: shared hit=103
+                          ->  Hash  (cost=852.00..852.00 rows=30000 width=16) (actual time=5.765..5.765 rows=30000.00 loops=1)
                                 Buckets: 32768  Batches: 1  Memory Usage: 1663kB
                                 Buffers: shared hit=552
-                                ->  Seq Scan on products p  (cost=0.00..852.00 rows=30000 width=16) (actual time=0.003..1.901 rows=30000.00 loops=1)
+                                ->  Seq Scan on products p  (cost=0.00..852.00 rows=30000 width=16) (actual time=0.021..3.517 rows=30000.00 loops=1)
                                       Buffers: shared hit=552
 Planning:
-  Buffers: shared hit=267
-Planning Time: 0.586 ms
-Execution Time: 25.458 ms
+  Buffers: shared hit=336
+Planning Time: 1.528 ms
+Execution Time: 41.424 ms

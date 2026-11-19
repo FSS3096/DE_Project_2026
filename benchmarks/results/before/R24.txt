@@ -1,27 +1,27 @@
 === R24 run 1 ===
-Index Scan using products_asin_key on products  (cost=0.29..8.30 rows=1 width=46) (actual time=0.022..0.023 rows=1.00 loops=1)
+Index Scan using products_asin_key on products  (cost=0.29..8.30 rows=1 width=46) (actual time=0.021..0.021 rows=1.00 loops=1)
   Index Cond: ((asin)::text = 'B0020A200F'::text)
   Index Searches: 1
   Buffers: shared hit=3
 Planning:
-  Buffers: shared hit=123
-Planning Time: 0.229 ms
-Execution Time: 0.040 ms
+  Buffers: shared hit=136
+Planning Time: 1.161 ms
+Execution Time: 0.051 ms
 === R24 run 2 ===
-Index Scan using products_asin_key on products  (cost=0.29..8.30 rows=1 width=46) (actual time=0.009..0.010 rows=1.00 loops=1)
+Index Scan using products_asin_key on products  (cost=0.29..8.30 rows=1 width=46) (actual time=0.017..0.018 rows=1.00 loops=1)
   Index Cond: ((asin)::text = 'B0020A200F'::text)
   Index Searches: 1
   Buffers: shared hit=3
 Planning:
-  Buffers: shared hit=123
-Planning Time: 0.186 ms
-Execution Time: 0.023 ms
+  Buffers: shared hit=136
+Planning Time: 0.800 ms
+Execution Time: 0.048 ms
 === R24 run 3 ===
-Index Scan using products_asin_key on products  (cost=0.29..8.30 rows=1 width=46) (actual time=0.010..0.010 rows=1.00 loops=1)
+Index Scan using products_asin_key on products  (cost=0.29..8.30 rows=1 width=46) (actual time=0.031..0.032 rows=1.00 loops=1)
   Index Cond: ((asin)::text = 'B0020A200F'::text)
   Index Searches: 1
   Buffers: shared hit=3
 Planning:
-  Buffers: shared hit=123
-Planning Time: 0.174 ms
-Execution Time: 0.026 ms
+  Buffers: shared hit=136
+Planning Time: 1.229 ms
+Execution Time: 0.098 ms
